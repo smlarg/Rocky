@@ -1,0 +1,144 @@
+# makefile for seaborg.nersc.gov, IBM SP
+# Compile with gmake, it will not work with the default make
+# remember to load both the GNU and the HDF module before compiling
+# i.e. do:
+# module load hdf
+# module load GNU
+# from the command line or add these to your ~/.login.ext script
+
+SHELL=/bin/csh
+
+# Compiler to use
+
+#F90 = mpxlf90
+F90 = gfortran
+#cc  = gcc
+#CC  = gcc
+#F90 = /u/local/mpi/mpich2/current/bin/mpif90
+cc  = gcc
+CC  = gcc
+
+# Compiler options
+
+# Fortran 90 Flags
+#
+# -qsuffix=f=f90		Accept both .f and .f90 files as fortran files
+#
+# -bmaxdata:0x40000000  Sets the maximum data (heap) size to 1Gb
+#
+# -bmaxstack:0x10000000 Sets the maximum stack size to 256Mb
+#
+# -qinit=f90ptr     	Sets the initial values of pointers to null, and makes
+#                   	their association status disassociated instead of
+#                  	 	undefined (this is probably no longer required but is included
+#                   	for safety)
+#
+# Optimization Flags
+#
+# -O3 					Performs the -O level optimizations and performs additional
+#                   	optimizations that are memory or compile time intensive.
+# -qstrict          	Ensures that optimizations done by the -O3 option
+#                   	do not alter the semantics of a program.
+# -qarch=pwr3       	Produces an object that contains instructions that run on the
+#                   	POWER3 hardware platforms.
+# -qtune=pwr3       	Produces an object optimized for the POWER3 hardware platforms.
+#
+# Debug Flags
+# 
+# -g 					Produces debug information. If used with any -O (optimization
+#                       switch) may produce erroneous information
+# -C 					Performs run-time checking of array bounds and character
+#                       substring expressions.
+
+# MEMORY_FLAGS =  -bmaxdata:0x80000000 -bmaxstack:0x10000000
+#MEMORY_FLAGS =  -q64
+
+# Normal
+#F90FLAGS =  -qsuffix=f=f90   -O3 -qarch=ppc970 -qalias=noaryovrlp -qalias=nopteovrlp -qinit=f90ptr -qmoddir=/tmp/josh/osiris2d -I/tmp/josh/osiris2d 
+#F90FLAGSO =  -qsuffix=f=f90   -O3 -qstrict -qinit=f90ptr -qmoddir=/tmp/josh/osiris2d -I/tmp/josh/osiris2d 
+#F90FLAGS =  -qsuffix=f=f90 -O3 -qstrict -qinit=f90ptr -qmoddir=/tmp/tonge/osiris2d -I/tmp/tonge/osiris2d -g
+# F90FLAGS = -qsuffix=f=f90 -O3 -qstrict -qinit=f90ptr 
+F90FLAGS =
+
+# Debug
+#F90FLAGS = -qsuffix=f=f90 -g -C -qinit=f90ptr -qmoddir=/tmp/tonge/osiris2d -I/tmp/tonge/osiris2d
+#F90FLAGSO =  -qsuffix=f=f90 -g  -C  -qinit=f90ptr -qmoddir=/tmp/tonge/osiris2d -I/tmp/tonge/osiris2d 
+
+
+
+# C, C++ Flags
+CFLAGS   = -O3 -c -qstrict -qarch=auto -qtune=auto -I/Developer/Headers/FlatCarbon -qextname
+
+# Include Path for fortran files
+# for LamMPI
+# INCPATH = -I$(HDF_DIR)/include -I/usr/local/include
+# for MacMPI
+
+MPIDIR = /u/local/mpi/mpilam
+#MPIDIR = /u/local/mpi/mpich2/current
+HDF_DIR = /u/local/apps/hdf
+H5_DIR = /u/local/apps/hdf5/1.6.5
+SZ_DIR = /u/local/apps/szip/current
+MPILIBS = -llam -lmpi -llamf77mpi -llammpio
+#MPILIBS = -llam -lmpi -llamf77mpi 
+INCPATH = 
+
+# Include Path for libraries
+LIBPATH = -L$(MPIDIR)/lib -L$(HDF_DIR)/lib -L$(H5_DIR)/lib -L$(SZ_DIR)/lib
+
+# Libraries to include
+HDFLIBS     = -lz -ljpeg -ldf -lmfhdf
+
+H5LIBS =  -lhdf5 -lhdf5_fortran -lsz
+#H5LIBS =  -lhdf5 -lhdf5_fortran -lsz
+       
+# Object Files
+
+
+OBJSALL = boris-push.f90
+  
+
+OBJS    = $(OBJSALL) 
+
+
+#######################################################################
+
+all: boris.e 
+
+%.o:%.c
+	$(cc) $(CFLAGS) -c $^
+
+%.o:%.cpp
+	$(CC) $(CFLAGS) $(INCPATH) -c $^
+
+%.o:%.f90
+	$(F90) $(F90FLAGS) $(INCPATH) -c $^
+
+boris.e : $(OBJS)
+	$(F90) $(F90FLAGS)  -o $@ $(OBJS)
+	
+clean: 
+	rm -f  boris.e
+	rm -f $(OBJS) 
+	rm -f *.mod
+
+clean-exec: 
+	rm -f boris.e
+
+makedir: 
+	mkdir -p /tmp/josh/osiris2d
+
+clean-objs:
+	rm -f $(OBJS)
+	rm -f *.mod
+
+help:
+	@echo "Osiris Makefile options"
+	@echo
+	@echo "all          - (default) Build osiris.e target"
+	@echo "clean        - Remove executables and object files"
+	@echo "clean-exec   - Remove executables"
+	@echo "clean-objs   - Remove object files"
+	@echo "help         - Display this message"
+
+

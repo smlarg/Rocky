@@ -1,0 +1,200 @@
+(* Content-type: application/mathematica *)
+
+(*** Wolfram Notebook File ***)
+(* http://www.wolfram.com/nb *)
+
+(* CreatedBy='Mathematica 6.0' *)
+
+(*CacheID: 234*)
+(* Internal cache information:
+NotebookFileLineBreakTest
+NotebookFileLineBreakTest
+NotebookDataPosition[       145,          7]
+NotebookDataLength[      5665,        191]
+NotebookOptionsPosition[      5191,        172]
+NotebookOutlinePosition[      5527,        187]
+CellTagsIndexPosition[      5484,        184]
+WindowFrame->Normal
+ContainsDynamic->False*)
+
+(* Beginning of Notebook Content *)
+Notebook[{
+Cell[BoxData[
+ RowBox[{"(*", 
+  RowBox[{"E", " ", "field"}], "*)"}]], "Input",
+ CellChangeTimes->{{3.481910897760565*^9, 3.481910910317462*^9}}],
+
+Cell[BoxData[{
+ RowBox[{
+  RowBox[{
+   RowBox[{"Ev", "[", 
+    RowBox[{"x_", ",", "t_"}], "]"}], " ", ":=", " ", 
+   RowBox[{
+    RowBox[{
+     FractionBox["8", "13"], " ", 
+     RowBox[{"Cos", "[", 
+      RowBox[{"t", "+", "x"}], "]"}]}], "+", 
+    RowBox[{"Sin", "[", 
+     RowBox[{"t", "-", "x"}], "]"}], "-", 
+    RowBox[{
+     FractionBox["1", "13"], " ", 
+     RowBox[{"Sin", "[", 
+      RowBox[{"t", "+", "x"}], "]"}]}]}]}], ";"}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{
+   RowBox[{"Ep", "[", 
+    RowBox[{"x_", ",", "t_"}], "]"}], ":=", " ", 
+   RowBox[{
+    RowBox[{
+     FractionBox["8", "13"], " ", 
+     SuperscriptBox["\[ExponentialE]", 
+      RowBox[{"-", "x"}]], " ", 
+     RowBox[{"Cos", "[", 
+      RowBox[{"t", "-", 
+       FractionBox["x", "2"]}], "]"}]}], "+", 
+    RowBox[{
+     FractionBox["12", "13"], " ", 
+     SuperscriptBox["\[ExponentialE]", 
+      RowBox[{"-", "x"}]], " ", 
+     RowBox[{"Sin", "[", 
+      RowBox[{"t", "-", 
+       FractionBox["x", "2"]}], "]"}]}]}]}], ";"}]}], "Input",
+ CellChangeTimes->{{3.481908321349118*^9, 3.481908350143203*^9}, {
+  3.481909528964944*^9, 3.481909533634293*^9}, {3.481910718786324*^9, 
+  3.481910724010962*^9}, {3.481910894879809*^9, 3.481910905879754*^9}}],
+
+Cell[BoxData[{
+ RowBox[{
+  RowBox[{
+   RowBox[{"El", "[", 
+    RowBox[{"x_", ",", 
+     RowBox[{"t_", "/;", 
+      RowBox[{"x", ">", "0"}]}]}], "]"}], ":=", 
+   RowBox[{"Ep", "[", 
+    RowBox[{"x", ",", "t"}], "]"}]}], ";"}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{
+   RowBox[{"El", "[", 
+    RowBox[{"x_", ",", 
+     RowBox[{"t_", "/;", 
+      RowBox[{"x", "\[LessEqual]", "0"}]}]}], "]"}], ":=", 
+   RowBox[{"Ev", "[", 
+    RowBox[{"x", ",", "t"}], "]"}]}], ";"}]}], "Input",
+ CellChangeTimes->{{3.481909683147607*^9, 3.4819098432193537`*^9}}],
+
+Cell[BoxData[
+ RowBox[{"(*", 
+  RowBox[{"B", " ", "field"}], "*)"}]], "Input",
+ CellChangeTimes->{{3.481910921372188*^9, 3.481910929623719*^9}}],
+
+Cell[BoxData[{
+ RowBox[{
+  RowBox[{
+   RowBox[{"Bv", "[", 
+    RowBox[{"x_", ",", "t_"}], "]"}], ":=", " ", 
+   RowBox[{
+    RowBox[{
+     RowBox[{"-", 
+      FractionBox["8", "13"]}], " ", 
+     RowBox[{"Cos", "[", 
+      RowBox[{"t", "+", "x"}], "]"}]}], "+", 
+    RowBox[{"Sin", "[", 
+     RowBox[{"t", "-", "x"}], "]"}], "+", 
+    RowBox[{
+     FractionBox["1", "13"], " ", 
+     RowBox[{"Sin", "[", 
+      RowBox[{"t", "+", "x"}], "]"}]}]}]}], ";"}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{
+   RowBox[{"Bp", "[", 
+    RowBox[{"x_", ",", "t_"}], "]"}], ":=", " ", 
+   RowBox[{
+    RowBox[{
+     RowBox[{"-", 
+      FractionBox["8", "13"]}], " ", 
+     SuperscriptBox["\[ExponentialE]", 
+      RowBox[{"-", "x"}]], " ", 
+     RowBox[{"Cos", "[", 
+      RowBox[{"t", "-", 
+       FractionBox["x", "2"]}], "]"}]}], "+", 
+    RowBox[{
+     FractionBox["14", "13"], " ", 
+     SuperscriptBox["\[ExponentialE]", 
+      RowBox[{"-", "x"}]], " ", 
+     RowBox[{"Sin", "[", 
+      RowBox[{"t", "-", 
+       FractionBox["x", "2"]}], "]"}]}]}]}], ";"}]}], "Input",
+ CellChangeTimes->{{3.481909893091707*^9, 3.4819099583706007`*^9}}],
+
+Cell[BoxData[{
+ RowBox[{
+  RowBox[{
+   RowBox[{"B", "[", 
+    RowBox[{"x_", ",", 
+     RowBox[{"t_", "/;", 
+      RowBox[{"x", ">", "0"}]}]}], "]"}], ":=", 
+   RowBox[{"Bp", "[", 
+    RowBox[{"x", ",", "t"}], "]"}]}], ";"}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{
+   RowBox[{"B", "[", 
+    RowBox[{"x_", ",", 
+     RowBox[{"t_", "/;", 
+      RowBox[{"x", "\[LessEqual]", "0"}]}]}], "]"}], ":=", 
+   RowBox[{"Bv", "[", 
+    RowBox[{"x", ",", "t"}], "]"}]}], ";"}]}], "Input",
+ CellChangeTimes->{{3.481909971993827*^9, 3.481909982784143*^9}}],
+
+Cell[BoxData[
+ RowBox[{"Animate", "[", 
+  RowBox[{
+   RowBox[{"Plot", "[", 
+    RowBox[{
+     RowBox[{"{", 
+      RowBox[{
+       RowBox[{"El", "[", 
+        RowBox[{"x", ",", "t"}], "]"}], ",", 
+       RowBox[{"B", "[", 
+        RowBox[{"x", ",", "t"}], "]"}]}], "}"}], ",", 
+     RowBox[{"{", 
+      RowBox[{"x", ",", 
+       RowBox[{
+        RowBox[{"-", "2"}], "\[Pi]"}], ",", 
+       RowBox[{"2", "\[Pi]"}]}], "}"}], ",", 
+     RowBox[{"PlotRange", "\[Rule]", "2"}]}], "]"}], ",", 
+   RowBox[{"{", 
+    RowBox[{"t", ",", "0", ",", 
+     RowBox[{"2", "\[Pi]"}]}], "}"}]}], "]"}]], "Input",
+ CellChangeTimes->{{3.481908228764175*^9, 3.481908235971593*^9}, {
+  3.481909988347782*^9, 3.481910021833096*^9}, {3.481910706338708*^9, 
+  3.481910706953806*^9}, {3.4819107621719418`*^9, 3.481910789917603*^9}, {
+  3.481910856007258*^9, 3.481910875893426*^9}}]
+},
+WindowSize->{791, 1002},
+WindowMargins->{{4, Automatic}, {0, Automatic}},
+FrontEndVersion->"6.0 for Mac OS X x86 (32-bit) (April 20, 2007)",
+StyleDefinitions->"Default.nb"
+]
+(* End of Notebook Content *)
+
+(* Internal cache information *)
+(*CellTagsOutline
+CellTagsIndex->{}
+*)
+(*CellTagsIndex
+CellTagsIndex->{}
+*)
+(*NotebookFileOutline
+Notebook[{
+Cell[568, 21, 144, 3, 27, "Input"],
+Cell[715, 26, 1233, 37, 83, "Input"],
+Cell[1951, 65, 550, 17, 43, "Input"],
+Cell[2504, 84, 144, 3, 27, "Input"],
+Cell[2651, 89, 1130, 37, 83, "Input"],
+Cell[3784, 128, 546, 17, 43, "Input"],
+Cell[4333, 147, 854, 23, 27, "Input"]
+}
+]
+*)
+
+(* End of internal cache information *)

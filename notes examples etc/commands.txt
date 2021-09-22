@@ -1,0 +1,9 @@
+rm rocky_py.pyf rocky_py.so
+
+f2py -h rocky_py.pyf -m rocky_py rocky_py.f90
+
+f2py --f90flags="-O3 -ffree-line-length-none" -c rocky_py.pyf rocky_py.f90
+
+---
+
+f2py -c rocky_py.f90 -m rocky_py

@@ -1,0 +1,50 @@
+!    -*- f90 -*-
+! Note: the context of this file is case sensitive.
+
+python module rocky_py ! in 
+    interface  ! in :rocky_py
+        subroutine twod_ps(ps_n1,ps_n2,x1min,x1max,x2min,x2max,np,data1,data2,w,q,ps) ! in :rocky_py:rocky_py.f90
+            integer intent(in) :: ps_n1
+            integer intent(in) :: ps_n2
+            real(kind=8) intent(in) :: x1min
+            real(kind=8) intent(in) :: x1max
+            real(kind=8) intent(in) :: x2min
+            real(kind=8) intent(in) :: x2max
+            integer, optional,intent(in),check(len(data1)>=np),depend(data1) :: np=len(data1)
+            real(kind=8) dimension(np),intent(in) :: data1
+            real(kind=8) dimension(np),intent(in),depend(np) :: data2
+            real(kind=8) dimension(np),intent(in),depend(np) :: w
+            real(kind=8) dimension(np),intent(in),depend(np) :: q
+            real(kind=8) dimension(ps_n1,ps_n2),intent(out),depend(ps_n1,ps_n2) :: ps
+        end subroutine twod_ps
+        subroutine get_block_of_fields(block_size,x,t,e,b) ! in :rocky_py:rocky_py.f90
+            integer, optional,intent(in),check(shape(x,0)==block_size),depend(x) :: block_size=shape(x,0)
+            real(kind=8) dimension(block_size,3),intent(in) :: x
+            real(kind=8) intent(in) :: t
+            real(kind=8) dimension(block_size,3),intent(out),depend(block_size) :: e
+            real(kind=8) dimension(block_size,3),intent(out),depend(block_size) :: b
+        end subroutine get_block_of_fields
+        subroutine push_block(block_size,x,p,dt,e,b,xo,po) ! in :rocky_py:rocky_py.f90
+            integer, optional,intent(in),check(shape(x,0)==block_size),depend(x) :: block_size=shape(x,0)
+            real(kind=8) dimension(block_size,3),intent(in) :: x
+            real(kind=8) dimension(block_size,3),intent(in),depend(block_size) :: p
+            real(kind=8) intent(in) :: dt
+            real(kind=8) dimension(block_size,3),intent(in),depend(block_size) :: e
+            real(kind=8) dimension(block_size,3),intent(in),depend(block_size) :: b
+            real(kind=8) dimension(block_size,3),intent(out),depend(block_size) :: xo
+            real(kind=8) dimension(block_size,3),intent(out),depend(block_size) :: po
+        end subroutine push_block
+        subroutine pushall(particle_count,x,p,t,dt,xo,po) ! in :rocky_py:rocky_py.f90
+            integer, optional,intent(in),check(shape(x,0)==particle_count),depend(x) :: particle_count=shape(x,0)
+            real(kind=8) dimension(particle_count,3),intent(in) :: x
+            real(kind=8) dimension(particle_count,3),intent(in),depend(particle_count) :: p
+            real(kind=8) intent(in) :: t
+            real(kind=8) intent(in) :: dt
+            real(kind=8) dimension(particle_count,3),intent(out),depend(particle_count) :: xo
+            real(kind=8) dimension(particle_count,3),intent(out),depend(particle_count) :: po
+        end subroutine pushall
+    end interface 
+end python module rocky_py
+
+! This file was auto-generated with f2py (version:2).
+! See http://cens.ioc.ee/projects/f2py2e/
